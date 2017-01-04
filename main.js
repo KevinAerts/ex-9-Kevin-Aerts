@@ -134,5 +134,28 @@ app.get('/bewegingen/:id', function (request, response) {
     });
 });
 
+// opvangen van een POST op /bewegingen.
+app.post("/bewegingen", function(request, response) {
+    // de data in de body wordt toegekend aan onze locatie variabele.
+    // deze is enkel opgevuld indien het JSON is.
+    var beweging = request.body;
+    // Valideren dat velden bestaan
+    var errors = validatebewegingen.fieldsNotEmpty(beweging, "bewegingid", "beginlocatie", "eindlocatie", "duur", "weer", "beweging");
+    if (errors) {
+        response.status(400).send({
+            msg: "Volgende velden zijn verplicht of fout: " + errors.concat()
+        });
+        return;
+    }
+    dalbewegingen.saveBewegingen(beweging, function(err, beweging) {
+        if(err){
+            throw err;
+        }
+        response.send(beweging);
+    });
+});
+
+
+
 app.listen(4567);
 console.log("server is opgestart...");

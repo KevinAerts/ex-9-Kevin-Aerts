@@ -35,5 +35,10 @@ module.exports = {
 
     findBewegingen : function(id, callback){
         Beweging.find({bewegingid:id}, callback);
+    },
+    
+    saveBewegingen: function (beweging, callback) {
+        Beweging.create(beweging, callback);
     }
+
 };

@@ -1,7 +1,32 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+module.exports = {
+    fieldsNotEmpty: function (object) {
+        "beweging";
+        var errors = [];
+        var i = 1;
+        if(typeof object["bewegingid"] != "number"){
+            errors.push(arguments[i]);
+        }
+        i++;
+        if(typeof object["beginlocatie"] != "object"){
+            errors.push(arguments[i]);
+        }
+        i++;
+        if(typeof object["eindlocatie"] != "object"){
+            errors.push(arguments[i]);
+        }
+        i++;
+        if(object["duur"] == 0 || typeof object["duur"] != "number"){
+            errors.push(arguments[i]);
+        }
+        i++;
+        if(typeof object["weer"] != "string"){
+            errors.push(arguments[i]);
+        }
+          i++;
+        if(object["beweging"] == "" || typeof object["beweging"] != "boolean"){
+            errors.push(arguments[i]);
+        }
+        return errors.length === 0 ? null : errors;
+    }
 
-
+};
