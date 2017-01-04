@@ -68,6 +68,25 @@ app.post("/locaties", function(request, response) {
     });
 });
 
+app.put("/locaties/:id", function (request, response) {
+    var locatie = request.body;
+    // Valideren dat velden bestaan
+    var errors = validatelocaties.fieldsNotEmpty(locatie, "naam_drone", "mac_address_drone", "naam_locatie", "beschrijving");
+    if (errors) {
+        response.status(400).send({
+            msg: "Volgende velden zijn verplicht of fout: " + errors.concat()
+        });
+        return;
+    }
+
+    dallocaties.updateLocaties(request.params.id, locatie, function (err, locatie) {
+        if(err){
+            throw err;
+        }
+        response.send(locatie);
+    });
+});
+
 //----- alles van aanwezigheden ----- (Opdraccht 5)
 // opvangen van een GET op /aanwezigheden
 app.get('/aanwezigheden', function (request, response) {
@@ -154,8 +173,6 @@ app.post("/bewegingen", function(request, response) {
         response.send(beweging);
     });
 });
-
-
 
 app.listen(4567);
 console.log("server is opgestart...");

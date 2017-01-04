@@ -32,7 +32,9 @@ module.exports = {
     },
     saveLocaties: function (locatie, callback) {
         Locatie.create(locatie, callback);
-
+    },
+    updateLocaties: function (id, locatie, callback) {
+        Locatie.findOneAndUpdate({naam_drone:id}, locatie , callback);
     }
-
 };
+
