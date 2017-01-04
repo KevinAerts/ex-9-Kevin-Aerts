@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 var dallocaties = require('./Storagelocaties.js');
 var validatelocaties = require('./Validatelocaties.js');
-var dalaanwezigheden = require(':/Storageaanwezigheden.js');
+var dalaanwezigheden = require('./Storageaanwezigheden.js');
 var validateaanwezigheden = require('./Validateaanwezigheden.js');
 
 var app = express();
@@ -66,9 +66,30 @@ app.post("/locaties", function(request, response) {
     });
 });
 
+//----- alles van aanwezigheden -----
 
 
 
 app.listen(4567);
 console.log("server is opgestart...");
 
+// opvangen van een GET op /aanwezigheden
+app.get('/aanwezigheden', function (request, response) {
+    dalaanwezigheden.AllAanwezigheden(function (err, aanwezig) {
+        if(err){
+            throw err;
+        }
+        response.send(aanwezig);
+    });
+});
+
+// opvangen van een GET op /aanwezigheden/:ID
+app.get('/aanwezigheden/:id', function (request, response) {
+    dalaanwezigheden.findAanwezigheden(request.params.id, function (err, aanwezig) {
+        if (aanwezig) {
+        response.send(aanwezig);
+    } else {
+        throw err;
+    }
+    });
+});
