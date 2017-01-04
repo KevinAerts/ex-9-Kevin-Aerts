@@ -7,11 +7,11 @@ var aanwezigSchema = mongoose.Schema({
 	            },
 	            naam_drone: {
 	                type: String,
-	                required: true,
+	                required: true
 	            },
 	            aantal: {
 	                type: Number,
-	                required: true,
+	                required: true
 	            },
 	            naam_locatie: {
 	                type: String,
@@ -31,6 +31,9 @@ module.exports = {
     },
     findAanwezigheden : function(id, callback){
         Aanwezig.find({ID:id}, callback);
+    },
+    saveAanwezigheden: function (aanwezig, callback) {
+        Aanwezig.create(aanwezig, callback);
     }
 };
 

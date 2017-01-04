@@ -11,7 +11,7 @@ var app = express();
 mongoose.connect('mongodb://localhost:27017/API');
 app.use(bodyparser.json());
 
-//------ alles van locaties ------
+//------ alles van locaties ------ (Opdracht 5)
 // opvangen van een GET op /locaties
 app.get('/locaties', function (request, response) {
     dallocaties.AllLocaties(function (err, locatie) {
@@ -33,7 +33,7 @@ app.get('/locaties/:id', function (request, response) {
     });
 });
 
-// opvangen van een POST op /locaties.
+// opvangen van een POST op /locaties. 
 app.post("/locaties", function(request, response) {
     // de data in de body wordt toegekend aan onze locatie variabele.
     // deze is enkel opgevuld indien het JSON is.
@@ -66,13 +66,7 @@ app.post("/locaties", function(request, response) {
     });
 });
 
-//----- alles van aanwezigheden -----
-
-
-
-app.listen(4567);
-console.log("server is opgestart...");
-
+//----- alles van aanwezigheden ----- (Opdraccht 5)
 // opvangen van een GET op /aanwezigheden
 app.get('/aanwezigheden', function (request, response) {
     dalaanwezigheden.AllAanwezigheden(function (err, aanwezig) {
@@ -93,3 +87,28 @@ app.get('/aanwezigheden/:id', function (request, response) {
     }
     });
 });
+
+// opvangen van een POST op /aanwezigheden. 
+app.post("/aanwezigheden", function(request, response) {
+    // de data in de body wordt toegekend aan onze locatie variabele.
+    // deze is enkel opgevuld indien het JSON is.
+    var personen = request.body;
+    // Valideren dat velden bestaan
+    var errors = validateaanwezigheden.fieldsNotEmpty(personen, "ID", "naam_drone", "aantal", "naam_locatie", "uur");
+    if (errors) {
+        response.status(400).send({
+            msg: "Volgende velden zijn verplicht of fout: " + errors.concat()
+        });
+        return;
+    }
+    dalaanwezigheden.saveAanwezigheden(personen, function(err, personen) {
+        if(err){
+            throw err;
+        }
+        response.send(personen);
+    });
+});
+
+
+app.listen(4567);
+console.log("server is opgestart...");
