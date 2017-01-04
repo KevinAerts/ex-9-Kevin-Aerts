@@ -32,6 +32,40 @@ app.get('/locaties/:id', function (request, response) {
     });
 });
 
+// opvangen van een POST op /locaties.
+app.post("/locaties", function(request, response) {
+    // de data in de body wordt toegekend aan onze locatie variabele.
+    // deze is enkel opgevuld indien het JSON is.
+    var locatie = request.body;
+    // Valideren dat velden bestaan
+    var errors = validatelocaties.fieldsNotEmpty(locatie, "naam_drone", "mac_address_drone", "naam_locatie", "beschrijving");
+    if (errors) {
+        response.status(400).send({
+            msg: "Volgende velden zijn verplicht of fout: " + errors.concat()
+        });
+        return;
+    }
+    /*
+    // Valideren dat we niet dezelfde locatie 2x hebben
+    var existingLocatie = dal.findLocatie(locatie.naam_drone);
+    if (existingLocatie) {
+        response.status(409).send({
+            msg: "Naam_drone moet uniek zijn!",
+            link: "../locaties/" + existingLocatie.id
+        });
+        return;
+    }
+    Dit hoeft niet meer omdat we met moongoose zeggen dat ze uniek of niet uniek moeten zijn
+    */
+    dallocaties.saveLocaties(locatie, function(err, locatie) {
+        if(err){
+            throw err;
+        }
+        response.send(locatie);
+    });
+});
+
+
 
 
 app.listen(4567);

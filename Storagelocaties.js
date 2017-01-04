@@ -29,5 +29,10 @@ module.exports = {
     },
     findLocaties : function(id, callback){
         Locatie.find({naam_drone:id}, callback);
+    },
+    saveLocaties: function (locatie, callback) {
+        Locatie.create(locatie, callback);
+
     }
+
 };
