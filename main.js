@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyparser = require('body-parser');
+var mongoose = require('mongoose');
 
 var dallocaties = require('./Storagelocaties.js');
 var validatelocaties = require('./Validatelocaties.js');
