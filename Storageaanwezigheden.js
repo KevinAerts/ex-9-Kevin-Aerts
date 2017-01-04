@@ -23,17 +23,17 @@ var aanwezigSchema = mongoose.Schema({
 	            }
 	});
 
-var Aanwezig = module.exports = mongoose.model('Aanwezig', aanwezigSchema);
+var Aanwezigheid = module.exports = mongoose.model('Aanwezig', aanwezigSchema);
 
 module.exports = {
     AllAanwezigheden : function(callback) {
-        Aanwezig.find(callback);
+        Aanwezigheid.find(callback);
     },
     findAanwezigheden : function(id, callback){
-        Aanwezig.find({ID:id}, callback);
+        Aanwezigheid.find({ID:id}, callback);
     },
     saveAanwezigheden: function (aanwezig, callback) {
-        Aanwezig.create(aanwezig, callback);
+        Aanwezigheid.create(aanwezig, callback);
     }
 };
 

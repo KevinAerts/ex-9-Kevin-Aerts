@@ -6,7 +6,7 @@ var dallocaties = require('./Storagelocaties.js');
 var validatelocaties = require('./Validatelocaties.js');
 var dalaanwezigheden = require('./Storageaanwezigheden.js');
 var validateaanwezigheden = require('./Validateaanwezigheden.js');
-var dalbewegingen = require('./Storageaanwezigheden.js');
+var dalbewegingen = require('./Storagebewegingen.js');
 var validatebewegingen = require('./Validatebewegingen.js');
 
 var app = express();
@@ -111,6 +111,28 @@ app.post("/aanwezigheden", function(request, response) {
     });
 });
 
+// ----- Alles van Bewegingen ----- (opdracht 5)
+
+// opvangen van een GET op /bewegingen
+app.get('/bewegingen', function (request, response) {
+    dalbewegingen.AllBewegingen(function (err, beweging) {
+        if(err){
+            throw err;
+        }
+        response.send(beweging);
+    });
+});
+
+// opvangen van een GET op /bewegingen/:bewegingid
+app.get('/bewegingen/:id', function (request, response) {
+    dalbewegingen.findBewegingen(request.params.id, function (err, beweging) {
+        if (beweging) {
+        response.send(beweging);
+    } else {
+        err;
+    }
+    });
+});
 
 app.listen(4567);
 console.log("server is opgestart...");
