@@ -1,3 +1,4 @@
+//hulp gekregen van Jelle
 module.exports = {
     fieldsNotEmpty: function (object) {
         var errors = [];

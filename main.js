@@ -6,6 +6,8 @@ var dallocaties = require('./Storagelocaties.js');
 var validatelocaties = require('./Validatelocaties.js');
 var dalaanwezigheden = require('./Storageaanwezigheden.js');
 var validateaanwezigheden = require('./Validateaanwezigheden.js');
+var dalbewegingen = require('./Storageaanwezigheden.js');
+var validatebewegingen = require('./Validatebewegingen.js');
 
 var app = express();
 mongoose.connect('mongodb://localhost:27017/API');
